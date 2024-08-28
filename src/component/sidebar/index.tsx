@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  StyledFlex,
-  StyledPadddingFlex,
-  StyledText,
-  StyledTextLink,
-} from "./index.styled";
+import { StyledFlex, StyledText, StyledTextLink } from "./index.styled";
 import { Avatar, Box, Flex, Switch, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -44,7 +39,7 @@ const Sidebar = ({ handleChangeTheme }: SidebarProps) => {
         {SidebarItems.map((item, index) => (
           <li
             key={index}
-            className={`nav-item ${
+            className={`${isDarkMode ? "nav-item-dark" : "nav-item"} ${
               pathname.startsWith(item.path)
                 ? isDarkMode
                   ? "active"
@@ -64,9 +59,20 @@ const Sidebar = ({ handleChangeTheme }: SidebarProps) => {
       </ul>
 
       <Flex direction="column" gap="2">
-        <StyledText size="1">Today&apos;s Events</StyledText>
-        <StyledPadddingFlex direction="column" gap="2">
-          <Flex gap="3" align="center">
+        <StyledText
+          size="1"
+          style={{ color: isDarkMode ? "#EDFDEB57" : "#040F0047" }}
+          weight="bold"
+        >
+          Today&apos;s Events
+        </StyledText>
+        <Flex direction="column" gap="2">
+          <Flex
+            gap="3"
+            align="center"
+            className={isDarkMode ? "eventCard-dark" : "eventCard"}
+            p="2"
+          >
             <Avatar
               size="3"
               src="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop"
@@ -87,7 +93,12 @@ const Sidebar = ({ handleChangeTheme }: SidebarProps) => {
               </Text>
             </Box>
           </Flex>
-          <Flex gap="3" align="center">
+          <Flex
+            gap="3"
+            align="center"
+            className={isDarkMode ? "eventCard-dark" : "eventCard"}
+            p="2"
+          >
             <Avatar
               size="3"
               src="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop"
@@ -108,7 +119,12 @@ const Sidebar = ({ handleChangeTheme }: SidebarProps) => {
               </Text>
             </Box>
           </Flex>
-          <Flex gap="3" align="center">
+          <Flex
+            gap="3"
+            align="center"
+            className={isDarkMode ? "eventCard-dark" : "eventCard"}
+            p="2"
+          >
             <Avatar
               size="3"
               src="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop"
@@ -129,7 +145,7 @@ const Sidebar = ({ handleChangeTheme }: SidebarProps) => {
               </Text>
             </Box>
           </Flex>
-        </StyledPadddingFlex>
+        </Flex>
       </Flex>
       <Flex direction="column" gap="2">
         <Flex gap="3" align="center">

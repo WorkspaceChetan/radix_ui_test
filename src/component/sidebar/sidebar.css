@@ -21,6 +21,15 @@
   padding: 8px 0 8px 16px;
 }
 
+.sidebar .nav-item-dark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 8px 0 8px 16px;
+}
+
 .sidebar .nav-link {
   color: white;
   text-decoration: none;
@@ -44,5 +53,23 @@
 }
 
 .sidebar .nav-item:hover {
+  font-weight: 500;
+  color: #1d211c !important;
   background-color: rgba(0, 151, 0, 0.09);
+}
+
+.sidebar .nav-item-dark:hover {
+  font-weight: 500;
+  color: #fff !important;
+  background-color: rgba(0, 151, 0, 0.09);
+}
+
+.eventCard:hover {
+  border-radius: 6px;
+  background-color: #00200010;
+}
+
+.eventCard-dark:hover {
+  border-radius: 6px;
+  background-color: #f4f5f312;
 }
