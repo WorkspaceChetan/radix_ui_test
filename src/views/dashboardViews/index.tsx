@@ -16,6 +16,7 @@ import {
   Flex,
   Grid,
   Select,
+  Skeleton,
   Spinner,
   Text,
   TextArea,
@@ -172,218 +173,208 @@ const DashboardPageView = () => {
                   </Callout.Root>
                 )}
                 <Flex gap="3" direction={"column"}>
-                  <Text size="6">Create an event</Text>
-                  <Text size="2" color="gray">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore
+                  <Text size="6">
+                    <Skeleton loading={isLoading}>Create an event</Skeleton>
                   </Text>
+                  <Skeleton loading={isLoading}>
+                    <Text size="2" color="gray">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore
+                    </Text>
+                  </Skeleton>
                 </Flex>
-                <Flex gap="2" direction={"column"}>
-                  <Text size="3">Event Name</Text>
-                  <TextField.Root
-                    name="eventName"
-                    value={values.eventName}
-                    className={
-                      errors.eventName && submitCount > 0
-                        ? isDark
-                          ? "error-border-dark"
-                          : "error-border"
-                        : ""
-                    }
-                    onChange={handleChange}
-                    placeholder="Your Event Name"
-                    color="gray"
-                    variant="soft"
-                    size="2"
-                    style={{
-                      backgroundColor: isDark ? "#F4F5F312" : "#00200010",
-                    }}
-                  />
-                </Flex>
-                <Flex gap="2" direction="column">
-                  <Text size="3">Date & Time</Text>
-                  <Grid
-                    columns={{ initial: "1", md: "2" }}
-                    gap="3"
-                    width="auto"
-                  >
-                    <Box className="react-datepicker-wrapper">
-                      <DatePicker
-                        className={`${
-                          isDark ? "date-picker-dark" : "date-picker"
-                        } ${
-                          errors.date && submitCount > 0
-                            ? isDark
-                              ? "error-border-dark"
-                              : "error-border"
-                            : ""
-                        }`}
-                        selected={values.date}
-                        onChange={(value) => setFieldValue("date", value)}
-                        placeholderText="Select Date"
-                      />
-                    </Box>
-                    <Select.Root
-                      size="3"
-                      name="timezone"
-                      value={values.timezone}
-                      onValueChange={(value) =>
-                        setFieldValue("timezone", value)
-                      }
-                    >
-                      <Select.Trigger
-                        variant="soft"
-                        color="gray"
-                        className={
-                          errors.timezone && submitCount > 0
-                            ? isDark
-                              ? "error-border-dark"
-                              : "error-border"
-                            : ""
-                        }
-                        style={{
-                          backgroundColor: isDark ? "#F4F5F312" : "#00200010",
-                        }}
-                        placeholder={
-                          (
-                            <Flex align="center" gap="2">
-                              <GlobeIcon height="16" width="16" />
-                              <Text color="gray">Time Zone</Text>
-                            </Flex>
-                          ) as any
-                        }
-                      >
-                        <Flex as="span" align="center" gap="2">
-                          <GlobeIcon height="16" width="16" />
-                          {values.timezone}
-                        </Flex>
-                      </Select.Trigger>
-                      <Select.Content color="grass">
-                        {TimeZone.map((tz, index) => (
-                          <Select.Item key={index} value={tz.value}>
-                            {tz.name}
-                          </Select.Item>
-                        ))}
-                      </Select.Content>
-                    </Select.Root>
-                    <Select.Root
-                      size="3"
-                      name="startTime"
-                      value={values.startTime}
-                      onValueChange={(value) =>
-                        setFieldValue("startTime", value)
-                      }
-                    >
-                      <Select.Trigger
-                        variant="soft"
-                        color="gray"
-                        className={
-                          errors.startTime && submitCount > 0
-                            ? isDark
-                              ? "error-border-dark"
-                              : "error-border"
-                            : ""
-                        }
-                        style={{
-                          backgroundColor: isDark ? "#F4F5F312" : "#00200010",
-                        }}
-                        placeholder={
-                          (
-                            <Flex align="center" gap="2">
-                              <ClockIcon height="16" width="16" />
-                              <Text color="gray">Start time</Text>
-                            </Flex>
-                          ) as any
-                        }
-                      >
-                        <Flex as="span" align="center" gap="2">
-                          <ClockIcon height="16" width="16" />
-                          {values.startTime}
-                        </Flex>
-                      </Select.Trigger>
-                      <Select.Content color="grass">
-                        {StartTime.map((tz, index) => (
-                          <Select.Item key={index} value={tz.value}>
-                            {tz.name}
-                          </Select.Item>
-                        ))}
-                      </Select.Content>
-                    </Select.Root>
-                    <Select.Root
-                      size="3"
-                      name="endTime"
-                      value={values.endTime}
-                      onValueChange={(value) => setFieldValue("endTime", value)}
-                    >
-                      <Select.Trigger
-                        variant="soft"
-                        color="gray"
-                        className={
-                          errors.endTime && submitCount > 0
-                            ? isDark
-                              ? "error-border-dark"
-                              : "error-border"
-                            : ""
-                        }
-                        style={{
-                          backgroundColor: isDark ? "#F4F5F312" : "#00200010",
-                        }}
-                        placeholder={
-                          (
-                            <Flex align="center" gap="2">
-                              <ClockIcon height="16" width="16" />
-                              <Text color="gray">End time</Text>
-                            </Flex>
-                          ) as any
-                        }
-                      >
-                        <Flex as="span" align="center" gap="2">
-                          <ClockIcon height="16" width="16" />
-                          {values.endTime}
-                        </Flex>
-                      </Select.Trigger>
-                      <Select.Content color="grass">
-                        {EndTime.map((tz, index) => (
-                          <Select.Item key={index} value={tz.value}>
-                            {tz.name}
-                          </Select.Item>
-                        ))}
-                      </Select.Content>
-                    </Select.Root>
-                  </Grid>
-                </Flex>
-
-                <Flex gap="2" direction={"column"}>
-                  <Text size="3">Description</Text>
-                  <TextArea
-                    placeholder="Add event description…"
-                    name="description"
-                    value={values.description}
-                    onChange={handleChange}
-                    className={
-                      errors.description && submitCount > 0
-                        ? isDark
-                          ? "error-border-dark"
-                          : "error-border"
-                        : ""
-                    }
-                    color="gray"
-                    variant="soft"
-                    style={{
-                      backgroundColor: isDark ? "#F4F5F312" : "#00200010",
-                    }}
-                  />
-                </Flex>
-                <Flex gap="3" direction={"column"}>
+                <Skeleton loading={isLoading}>
                   <Flex gap="2" direction={"column"}>
-                    <Text size="3">Video</Text>
+                    <Text size="3">Event Name</Text>
                     <TextField.Root
-                      placeholder="Add video link…"
-                      name="video"
-                      value={values.video}
+                      name="eventName"
+                      value={values.eventName}
+                      className={
+                        errors.eventName && submitCount > 0
+                          ? isDark
+                            ? "error-border-dark"
+                            : "error-border"
+                          : ""
+                      }
+                      onChange={handleChange}
+                      placeholder="Your Event Name"
+                      color="gray"
+                      variant="soft"
+                      size="2"
+                      style={{
+                        backgroundColor: isDark ? "#F4F5F312" : "#00200010",
+                      }}
+                    />
+                  </Flex>
+                </Skeleton>
+                <Skeleton loading={isLoading}>
+                  <Flex gap="2" direction="column">
+                    <Text size="3">Date & Time</Text>
+                    <Grid
+                      columns={{ initial: "1", md: "2" }}
+                      gap="3"
+                      width="auto"
+                    >
+                      <Box className="react-datepicker-wrapper">
+                        <DatePicker
+                          className={`${
+                            isDark ? "date-picker-dark" : "date-picker"
+                          } ${
+                            errors.date && submitCount > 0
+                              ? isDark
+                                ? "error-border-dark"
+                                : "error-border"
+                              : ""
+                          }`}
+                          selected={values.date}
+                          onChange={(value) => setFieldValue("date", value)}
+                          placeholderText="Select Date"
+                        />
+                      </Box>
+                      <Select.Root
+                        size="3"
+                        name="timezone"
+                        value={values.timezone}
+                        onValueChange={(value) =>
+                          setFieldValue("timezone", value)
+                        }
+                      >
+                        <Select.Trigger
+                          variant="soft"
+                          color="gray"
+                          className={
+                            errors.timezone && submitCount > 0
+                              ? isDark
+                                ? "error-border-dark"
+                                : "error-border"
+                              : ""
+                          }
+                          style={{
+                            backgroundColor: isDark ? "#F4F5F312" : "#00200010",
+                          }}
+                          placeholder={
+                            (
+                              <Flex align="center" gap="2">
+                                <GlobeIcon height="16" width="16" />
+                                <Text color="gray">Time Zone</Text>
+                              </Flex>
+                            ) as any
+                          }
+                        >
+                          <Flex as="span" align="center" gap="2">
+                            <GlobeIcon height="16" width="16" />
+                            {values.timezone}
+                          </Flex>
+                        </Select.Trigger>
+                        <Select.Content color="grass">
+                          {TimeZone.map((tz, index) => (
+                            <Select.Item key={index} value={tz.value}>
+                              {tz.name}
+                            </Select.Item>
+                          ))}
+                        </Select.Content>
+                      </Select.Root>
+                      <Select.Root
+                        size="3"
+                        name="startTime"
+                        value={values.startTime}
+                        onValueChange={(value) =>
+                          setFieldValue("startTime", value)
+                        }
+                      >
+                        <Select.Trigger
+                          variant="soft"
+                          color="gray"
+                          className={
+                            errors.startTime && submitCount > 0
+                              ? isDark
+                                ? "error-border-dark"
+                                : "error-border"
+                              : ""
+                          }
+                          style={{
+                            backgroundColor: isDark ? "#F4F5F312" : "#00200010",
+                          }}
+                          placeholder={
+                            (
+                              <Flex align="center" gap="2">
+                                <ClockIcon height="16" width="16" />
+                                <Text color="gray">Start time</Text>
+                              </Flex>
+                            ) as any
+                          }
+                        >
+                          <Flex as="span" align="center" gap="2">
+                            <ClockIcon height="16" width="16" />
+                            {values.startTime}
+                          </Flex>
+                        </Select.Trigger>
+                        <Select.Content color="grass">
+                          {StartTime.map((tz, index) => (
+                            <Select.Item key={index} value={tz.value}>
+                              {tz.name}
+                            </Select.Item>
+                          ))}
+                        </Select.Content>
+                      </Select.Root>
+                      <Select.Root
+                        size="3"
+                        name="endTime"
+                        value={values.endTime}
+                        onValueChange={(value) =>
+                          setFieldValue("endTime", value)
+                        }
+                      >
+                        <Select.Trigger
+                          variant="soft"
+                          color="gray"
+                          className={
+                            errors.endTime && submitCount > 0
+                              ? isDark
+                                ? "error-border-dark"
+                                : "error-border"
+                              : ""
+                          }
+                          style={{
+                            backgroundColor: isDark ? "#F4F5F312" : "#00200010",
+                          }}
+                          placeholder={
+                            (
+                              <Flex align="center" gap="2">
+                                <ClockIcon height="16" width="16" />
+                                <Text color="gray">End time</Text>
+                              </Flex>
+                            ) as any
+                          }
+                        >
+                          <Flex as="span" align="center" gap="2">
+                            <ClockIcon height="16" width="16" />
+                            {values.endTime}
+                          </Flex>
+                        </Select.Trigger>
+                        <Select.Content color="grass">
+                          {EndTime.map((tz, index) => (
+                            <Select.Item key={index} value={tz.value}>
+                              {tz.name}
+                            </Select.Item>
+                          ))}
+                        </Select.Content>
+                      </Select.Root>
+                    </Grid>
+                  </Flex>
+                </Skeleton>
+
+                <Skeleton loading={isLoading}>
+                  <Flex gap="2" direction={"column"}>
+                    <Text size="3">Description</Text>
+
+                    <TextArea
+                      placeholder="Add event description…"
+                      name="description"
+                      value={values.description}
                       onChange={handleChange}
                       className={
-                        errors.video && submitCount > 0
+                        errors.description && submitCount > 0
                           ? isDark
                             ? "error-border-dark"
                             : "error-border"
@@ -394,108 +385,144 @@ const DashboardPageView = () => {
                       style={{
                         backgroundColor: isDark ? "#F4F5F312" : "#00200010",
                       }}
-                    >
-                      <TextField.Slot>
-                        <Link2Icon height="16" width="16" />
-                      </TextField.Slot>
-                    </TextField.Root>
+                    />
                   </Flex>
-                  <Flex gap="2" direction={"column"}>
-                    <Text size="3">Banner image</Text>
-                    {typeof images !== "string" ? (
-                      <Box id="imagePreview" className="image-preview ">
-                        <Flex align="center" gap="5">
-                          <Box
-                            style={{
-                              backgroundImage: `url(${images.url})`,
-                              height: "120px",
-                              width: "120px",
-                              backgroundPosition: "center",
-                              backgroundRepeat: "no-repeat",
-                            }}
-                          />
-                          <Flex direction="column" gap="2">
-                            <Button
-                              variant="soft"
-                              color="red"
-                              size="1"
-                              style={{ width: "32px", height: "32px" }}
-                              onClick={removeImage}
-                            >
-                              <TrashIcon />
-                            </Button>
-                            <Text size="1">{images.name}</Text>
-                            <Text size="1">{images.size} MB</Text>
-                          </Flex>
-                        </Flex>
-                      </Box>
-                    ) : (
-                      <Box
-                        style={{
-                          width: "100%",
-                          backgroundColor: isDark ? "#F4F5F312" : "#00200010",
-                          textAlign: "center",
-                          borderRadius: "6px",
-                          cursor: "pointer",
-                        }}
+                </Skeleton>
+
+                <Flex gap="3" direction={"column"}>
+                  <Skeleton loading={isLoading}>
+                    <Flex gap="2" direction={"column"}>
+                      <Text size="3">Video</Text>
+                      <TextField.Root
+                        placeholder="Add video link…"
+                        name="video"
+                        value={values.video}
+                        onChange={handleChange}
                         className={
-                          errors.bannerImage && submitCount > 0
+                          errors.video && submitCount > 0
                             ? isDark
                               ? "error-border-dark"
                               : "error-border"
                             : ""
                         }
-                        p="5"
+                        color="gray"
+                        variant="soft"
+                        style={{
+                          backgroundColor: isDark ? "#F4F5F312" : "#00200010",
+                        }}
                       >
-                        <input
-                          ref={inputFile}
-                          type="file"
-                          id="imageUpload"
-                          accept="image/*"
-                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                            if (e.target.files && e.target.files.length) {
-                              handleImageUpload(e.target.files[0]);
-                              setFieldValue(
-                                "bannerImage",
-                                URL.createObjectURL(e.target.files[0])
-                              );
-                            }
+                        <TextField.Slot>
+                          <Link2Icon height="16" width="16" />
+                        </TextField.Slot>
+                      </TextField.Root>
+                    </Flex>
+                  </Skeleton>
+                  <Skeleton loading={isLoading}>
+                    <Flex gap="2" direction={"column"}>
+                      <Text size="3">Banner image</Text>
+                      {typeof images !== "string" ? (
+                        <Box id="imagePreview" className="image-preview ">
+                          <Flex align="center" gap="5">
+                            <Box
+                              style={{
+                                backgroundImage: `url(${images.url})`,
+                                height: "120px",
+                                width: "120px",
+                                backgroundPosition: "center",
+                                backgroundRepeat: "no-repeat",
+                              }}
+                            />
+                            <Flex direction="column" gap="2">
+                              <Button
+                                variant="soft"
+                                color="red"
+                                size="1"
+                                style={{ width: "32px", height: "32px" }}
+                                onClick={removeImage}
+                              >
+                                <TrashIcon />
+                              </Button>
+                              <Text size="1">{images.name}</Text>
+                              <Text size="1">{images.size} MB</Text>
+                            </Flex>
+                          </Flex>
+                        </Box>
+                      ) : (
+                        <Box
+                          style={{
+                            width: "100%",
+                            backgroundColor: isDark ? "#F4F5F312" : "#00200010",
+                            textAlign: "center",
+                            borderRadius: "6px",
+                            cursor: "pointer",
                           }}
-                          hidden
-                        />
-                        <Text
-                          size="2"
-                          style={{ color: isDark ? "#EBFDE766" : "#050F0078" }}
+                          className={
+                            errors.bannerImage && submitCount > 0
+                              ? isDark
+                                ? "error-border-dark"
+                                : "error-border"
+                              : ""
+                          }
+                          p="5"
                         >
+                          <input
+                            ref={inputFile}
+                            type="file"
+                            id="imageUpload"
+                            accept="image/*"
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                              if (e.target.files && e.target.files.length) {
+                                handleImageUpload(e.target.files[0]);
+                                setFieldValue(
+                                  "bannerImage",
+                                  URL.createObjectURL(e.target.files[0])
+                                );
+                              }
+                            }}
+                            hidden
+                          />
                           <Text
-                            color="gray"
-                            onClick={onButtonClick}
+                            size="2"
                             style={{
-                              textDecoration: "underline",
                               color: isDark ? "#EBFDE766" : "#050F0078",
                             }}
                           >
-                            Click to upload
+                            <Text
+                              color="gray"
+                              onClick={onButtonClick}
+                              style={{
+                                textDecoration: "underline",
+                                color: isDark ? "#EBFDE766" : "#050F0078",
+                              }}
+                            >
+                              Click to upload
+                            </Text>
+                            &nbsp; or drag and drop<br></br> SVG, PNG, JPG or
+                            GIF recommended size 1024x1024px
                           </Text>
-                          &nbsp; or drag and drop<br></br> SVG, PNG, JPG or GIF
-                          recommended size 1024x1024px
-                        </Text>
-                      </Box>
-                    )}
-                  </Flex>
+                        </Box>
+                      )}
+                    </Flex>
+                  </Skeleton>
                 </Flex>
+
                 <Flex gap="4" align="center">
-                  <Button
-                    disabled={isLoading}
-                    type="submit"
-                    size="3"
-                    variant="soft"
-                    color="lime"
-                  >
-                    <Spinner loading={isLoading}></Spinner>
-                    Create event
-                  </Button>
-                  <AlertDialogModal name="Cancel" handleDelete={handleDelete} />
+                  <Skeleton loading={isLoading}>
+                    <Button
+                      disabled={isLoading}
+                      type="submit"
+                      size="3"
+                      variant="soft"
+                      color="lime"
+                    >
+                      <Spinner loading={isLoading}></Spinner>
+                      Create event
+                    </Button>
+                    <AlertDialogModal
+                      name="Cancel"
+                      handleDelete={handleDelete}
+                    />
+                  </Skeleton>
                 </Flex>
               </Flex>
             </form>

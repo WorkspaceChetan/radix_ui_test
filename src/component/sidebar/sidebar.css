@@ -19,6 +19,7 @@
   cursor: pointer;
   border-radius: 4px;
   padding: 8px 0 8px 16px;
+  color: #040e0082;
 }
 
 .sidebar .nav-item-dark {
@@ -28,6 +29,7 @@
   cursor: pointer;
   border-radius: 4px;
   padding: 8px 0 8px 16px;
+  color: #f0fdec74;
 }
 
 .sidebar .nav-link {
