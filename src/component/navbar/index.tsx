@@ -15,8 +15,10 @@ import {
   useThemeContext,
 } from "@radix-ui/themes";
 import { StyledNavFlex } from "./index.style";
-
-export const Navbar = () => {
+export type NavbarProps = {
+  handleSidebar: () => void;
+};
+export const Navbar = ({ handleSidebar }: NavbarProps) => {
   const { appearance } = useThemeContext();
   const isDark = appearance === "dark";
   return (
@@ -66,6 +68,7 @@ export const Navbar = () => {
         <Button
           style={{ background: `${isDark ? "#70FE8C1B" : "#e9f6e9"}` }}
           variant="soft"
+          onClick={handleSidebar}
         >
           <HamburgerMenuIcon color={`${isDark ? "#89FF9F" : "#006514"}`} />
         </Button>

@@ -48,6 +48,7 @@ const DashboardPageView = () => {
   const inputFile = useRef<HTMLInputElement>(null);
   const [images, setImages] = useState<FileObject | string>("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const validationSchema = yup.object({
     eventName: yup.string().required("Event name is required"),
@@ -68,15 +69,6 @@ const DashboardPageView = () => {
 
   const removeImage = () => {
     setImages("");
-  };
-
-  const handleImageUpload = (file: File) => {
-    const fileobject = {
-      name: file.name,
-      size: Math.round(file.size / 1024),
-      url: URL.createObjectURL(file),
-    };
-    setImages(fileobject);
   };
 
   const onButtonClick = () => {
@@ -115,12 +107,13 @@ const DashboardPageView = () => {
                   position: "absolute",
                   right: "0%",
                   top: "40%",
+                  background: isDark ? "#000" : "#FFF",
                 }}
                 p="2"
               >
                 <Flex align="center" justify="between">
                   <Text style={{ color: isDark ? "#FFF" : "#000" }} size="2">
-                    Event created on{" "}
+                    Event created on
                     {new Date().toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
@@ -157,19 +150,54 @@ const DashboardPageView = () => {
           resetForm,
         }) => {
           const errorMessage = submitCount > 0 ? Object.values(errors)[0] : "";
+
+          const handleImageUpload = (file: File) => {
+            const maxSize = 1.5 * 1024 * 1024;
+            if (file.size < maxSize) {
+              const fileobject = {
+                name: file.name,
+                size: Number((file.size / 1024 / 1024).toFixed(5)),
+                url: URL.createObjectURL(file),
+              };
+              setIsError(false);
+              setFieldValue("bannerImage", URL.createObjectURL(file));
+              setImages(fileobject);
+            } else {
+              setIsError(true);
+            }
+          };
+
           const handleDelete = () => {
             resetForm();
             setImages("");
+            setFieldValue("bannerImage", "");
           };
+
+          const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+            e.preventDefault();
+          };
+
+          const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+            e.preventDefault();
+            if (e.dataTransfer.files && e.dataTransfer.files.length) {
+              const file = e.dataTransfer.files[0];
+              handleImageUpload(file);
+            }
+          };
+
           return (
             <form onSubmit={handleSubmit}>
               <Flex direction="column" gap="8">
-                {errorMessage && (
+                {(errorMessage || isError) && (
                   <Callout.Root color="red">
                     <Callout.Icon>
                       <InfoCircledIcon />
                     </Callout.Icon>
-                    <Callout.Text>{errorMessage as string}</Callout.Text>
+                    <Callout.Text>
+                      {isError
+                        ? "Image size must be less than 1.5MB"
+                        : (errorMessage as string)}
+                    </Callout.Text>
                   </Callout.Root>
                 )}
                 <Flex gap="3" direction={"column"}>
@@ -430,6 +458,8 @@ const DashboardPageView = () => {
                                 width: "120px",
                                 backgroundPosition: "center",
                                 backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                borderRadius: "6px",
                               }}
                             />
                             <Flex direction="column" gap="2">
@@ -457,12 +487,14 @@ const DashboardPageView = () => {
                             cursor: "pointer",
                           }}
                           className={
-                            errors.bannerImage && submitCount > 0
+                            (errors.bannerImage && submitCount > 0) || isError
                               ? isDark
                                 ? "error-border-dark"
                                 : "error-border"
                               : ""
                           }
+                          onDragOver={handleDragOver}
+                          onDrop={handleDrop}
                           p="5"
                         >
                           <input
@@ -473,10 +505,6 @@ const DashboardPageView = () => {
                             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                               if (e.target.files && e.target.files.length) {
                                 handleImageUpload(e.target.files[0]);
-                                setFieldValue(
-                                  "bannerImage",
-                                  URL.createObjectURL(e.target.files[0])
-                                );
                               }
                             }}
                             hidden
